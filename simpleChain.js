@@ -145,4 +145,4 @@ class Blockchain{
 let blockchain = new Blockchain();
 blockchain.getBlockHeight();
 blockchain.getBlock(0, function(err,res){});
-blockchain.validateBlock(1);
+blockchain.validateBlock(0);
