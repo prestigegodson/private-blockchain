@@ -69,7 +69,7 @@ class Blockchain{
 
       levelSandbox.getAllData(function(err, chain){
         if(err){
-          console.log(err);
+          //console.log(err);
         }else{
           console.log("Block Height " + (JSON.parse(JSON.stringify(chain)).length - 1));
         }
@@ -82,7 +82,7 @@ class Blockchain{
       // return object as a single string
       levelSandbox.getLevelDBData(blockHeight, function(err, value){
         if(err){
-          console.log(err);
+          //console.log(err);
         }else{
           console.log("#Block " + blockHeight + " : " + value)
           callback(err, JSON.parse(JSON.parse(JSON.stringify(value))));
@@ -144,5 +144,5 @@ class Blockchain{
 
 let blockchain = new Blockchain();
 blockchain.getBlockHeight();
-blockchain.getBlock(1, function(err,res){});
+blockchain.getBlock(0, function(err,res){});
 blockchain.validateBlock(1);
