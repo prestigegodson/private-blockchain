@@ -16,7 +16,7 @@ function addLevelDBData(key,value){
 // Get data from levelDB with key
 function getLevelDBData(key,callback){
   db.get(key, function(err, value) {
-    callback(err, value)
+    callback(err, value);
   })
 }
 
@@ -27,7 +27,7 @@ function getAllData(callback){
     chain.push(JSON.parse(data.value));
     //console.log("# " + data.key + " : " + data.value);
     }).on('error', function(err) {
-        callback(err, null)
+        callback(err, null);
     }).on('close', function() {
       console.log('Closed');
       callback(null, chain);

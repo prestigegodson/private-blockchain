@@ -3,7 +3,7 @@
 |  =========================================================*/
 
 const SHA256 = require('crypto-js/sha256');
-const levelSandbox = require('./levelSandbox.js')
+const levelSandbox = require('./levelSandbox.js');
 const chainKey = "chain";
 
 /* ===== Block Class ==============================
@@ -58,7 +58,7 @@ class Blockchain{
       // Block hash with SHA256 using newBlock and converting to a string
       newBlock.hash = SHA256(JSON.stringify(newBlock)).toString();
       // Adding block object to chain
-      levelSandbox.addLevelDBData(newBlock.height, JSON.stringify(newBlock))
+      levelSandbox.addLevelDBData(newBlock.height, JSON.stringify(newBlock));
     })
     
   
@@ -103,7 +103,7 @@ class Blockchain{
         let validBlockHash = SHA256(JSON.stringify(block)).toString();
         // Compare
         if (blockHash===validBlockHash) {
-            console.log("Block is valid")
+            console.log("Block is valid");
             resolve(true);
           } else {
             console.log('Block #'+blockHeight+' invalid hash:\n'+blockHash+'<>'+validBlockHash);
@@ -119,13 +119,18 @@ class Blockchain{
         levelSandbox.getAllData(function(err, chain){
 
           let errorLog = [];
-          for (var i = 0; i < chain.length-1; i++) {
+          for (var i = 0; i < chain.length; i++) {
             // validate block
-            let isBlockValid = self.validateBlock(chain[i].height)
+            let isBlockValid = self.validateBlock(chain[i].height);
             if (!isBlockValid)errorLog.push(i);
+
+            if(i == 0){
+              continue;
+            }
+
             // compare blocks hash link
             let blockHash = chain[i].hash;
-            let previousHash = chain[i+1].previousBlockHash;
+            let previousHash = chain[i-1].previousBlockHash;
             if (blockHash!==previousHash) {
               errorLog.push(i);
             }
@@ -144,5 +149,7 @@ class Blockchain{
 
 let blockchain = new Blockchain();
 blockchain.getBlockHeight();
-blockchain.getBlock(0, function(err,res){});
-blockchain.validateBlock(0);
+// blockchain.addBlock(new Block("Third block"));
+// blockchain.getBlock(1, function(err,res){});
+// blockchain.validateBlock(3);
+blockchain.validateChain();
