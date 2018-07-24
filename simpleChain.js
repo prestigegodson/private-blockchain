@@ -115,7 +115,7 @@ class Blockchain{
 
    // Validate blockchain
     async validateChain(){
-        let self = this;
+        const self = this;
         levelSandbox.getAllData(function(err, chain){
 
           let errorLog = [];
@@ -124,21 +124,21 @@ class Blockchain{
             let isBlockValid = self.validateBlock(chain[i].height);
             if (!isBlockValid)errorLog.push(i);
 
-            if(i == (chain.length - 1) ){
+            if(i == 0 ){
               continue;
             }
 
             // compare blocks hash link
-            let blockHash = chain[i].hash;
-            let previousHash = chain[i+1].previousBlockHash;
-            if (blockHash!==previousHash) {
+            let blockHash = chain[i - 1].hash;
+            let previousHash = chain[i].previousBlockHash;
+            if (blockHash !== previousHash) {
               errorLog.push(i);
             }
           }
 
           if (errorLog.length>0) {
             console.log('Block errors = ' + errorLog.length);
-            console.log('Blocks: '+errorLog);
+            console.log('Blocks: '+ errorLog);
           } else {
             console.log('No errors detected');
           }
@@ -148,7 +148,7 @@ class Blockchain{
 }
 
 let blockchain = new Blockchain();
-blockchain.getBlockHeight();
+//blockchain.getBlockHeight();
 // blockchain.addBlock(new Block("Third block"));
 // blockchain.getBlock(1, function(err,res){});
 // blockchain.validateBlock(3);
