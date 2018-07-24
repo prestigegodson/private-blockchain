@@ -124,13 +124,13 @@ class Blockchain{
             let isBlockValid = self.validateBlock(chain[i].height);
             if (!isBlockValid)errorLog.push(i);
 
-            if(i == 0){
+            if(i == (chain.length - 1) ){
               continue;
             }
 
             // compare blocks hash link
             let blockHash = chain[i].hash;
-            let previousHash = chain[i-1].previousBlockHash;
+            let previousHash = chain[i+1].previousBlockHash;
             if (blockHash!==previousHash) {
               errorLog.push(i);
             }
