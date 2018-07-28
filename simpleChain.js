@@ -53,7 +53,7 @@ class Blockchain{
       newBlock.time = new Date().getTime().toString().slice(0,-3);
       // previous block hash
       if(chain.length > 0){
-        newBlock.previousBlockHash = chain[chain.length-1].hash;
+        newBlock.previousBlockHash = chain[chain.length-1].hash + "test";
       }
       // Block hash with SHA256 using newBlock and converting to a string
       newBlock.hash = SHA256(JSON.stringify(newBlock)).toString();
@@ -116,12 +116,12 @@ class Blockchain{
    // Validate blockchain
     async validateChain(){
         const self = this;
-        levelSandbox.getAllData(function(err, chain){
+        levelSandbox.getAllData(async function(err, chain){
 
           let errorLog = [];
           for (var i = 0; i < chain.length; i++) {
             // validate block
-            let isBlockValid = self.validateBlock(chain[i].height);
+            let isBlockValid =  await self.validateBlock(chain[i].height);
             if (!isBlockValid)errorLog.push(i);
 
             if(i == 0 ){
@@ -149,7 +149,7 @@ class Blockchain{
 
 let blockchain = new Blockchain();
 //blockchain.getBlockHeight();
-// blockchain.addBlock(new Block("Third block"));
+//blockchain.addBlock(new Block("Random block"));
 // blockchain.getBlock(1, function(err,res){});
 // blockchain.validateBlock(3);
 blockchain.validateChain();
