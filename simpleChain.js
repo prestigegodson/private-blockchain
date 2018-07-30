@@ -43,7 +43,7 @@ class Blockchain{
   }
 
   // Add new block
-  addBlock(newBlock){
+   addBlock(newBlock) {
 
     levelSandbox.getAllData(function(err, chain){
 
@@ -149,7 +149,7 @@ class Blockchain{
 
 let blockchain = new Blockchain();
 //blockchain.getBlockHeight();
-//blockchain.addBlock(new Block("Random block"));
+//blockchain.addBlock(new Block("Test Block 5"));
 // blockchain.getBlock(1, function(err,res){});
 // blockchain.validateBlock(3);
 blockchain.validateChain();
